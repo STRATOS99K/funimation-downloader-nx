@@ -608,8 +608,10 @@ async function downloadStreams(){
         mkvmux.push('--no-subtitles','--no-attachments');
         mkvmux.push(`${muxTrg}.ts`);
         if(addSubs){
-            mkvmux.push('--language','0:eng');
+            mkvmux.push('--language','0:en-US');
+            mkvmux.push('--track-name',`0:English (US)`);
             mkvmux.push(`${muxTrg}${subsExt}`);
+            mkvmux.push('--attach-file','NotoSans-Regular.ttf');
         }
         fs.writeFileSync(`${muxTrg}.json`,JSON.stringify(mkvmux,null,'  '));
         shlp.exec('mkvmerge',`"${mkvmergebinfile}"`,`@"${muxTrg}.json"`);
