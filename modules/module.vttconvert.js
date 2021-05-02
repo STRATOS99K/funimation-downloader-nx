@@ -71,28 +71,11 @@ function convertToAssLine(l, style) {
     let text = convertToAssText(l.text);
     
     // debugger
-    if (l.ext_param.align != 'middle') {
-        console.log('[WARN] Detected specific align param, please contact developer');
-        cosnole.log(l);
-    }
-    if (l.ext_param.vertical) {
-        console.log('[WARN] Detected specific vertical param, please contact developer');
-        cosnole.log(l);
-    }
-    if (l.ext_param.line && l.ext_param.line != '7%') {
-        console.log('[WARN] Detected specific line param, please contact developer');
-        cosnole.log(l);
-    }
-    if (l.ext_param.position) {
-        console.log('[WARN] Detected specific position param, please contact developer');
-        cosnole.log(l);
-    }
-    if (l.text.match(/<font/)){
-        console.log('[WARN] Detected specific color param, please contact developer');
-        cosnole.log(l);
+    if (l.ext_param.line === '7%') {
+        style = 'MainTop';
     }
     
-    if (l.ext_param.line === '7%') {
+    if (l.ext_param.line === '10%') {
         style = 'MainTop';
     }
     
@@ -112,8 +95,6 @@ function convertToAssText(text) {
         .replace(/&lt;/g, '<')
         .replace(/&gt;/g, '>')
         .replace(/&amp;/g, '&')
-        // .replace(/<c[^>]*>[^<]*<\/c>/g, '')
-        // .replace(/<ruby[^>]*>[^<]*<\/ruby>/g, '')
         .replace(/<[^>]>/g, '')
         .replace(/\\N$/, '')
         .replace(/ +$/, '');
