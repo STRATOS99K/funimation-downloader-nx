@@ -2,8 +2,6 @@
 
 Funimation Downloader NX is capable of downloading videos from the *Funimation* streaming service.
 
-Fork of @seiya-dev's Funimation Downloader NX
-
 ## Legal Warning
 
 This application is not endorsed by or affiliated with *Funimation*. This application enables you to download videos for offline viewing which may be forbidden by law in your country. The usage of this application may also cause a violation of the *Terms of Service* between you and the stream provider. This tool is not responsible for your actions; please make an informed decision before using this application.
@@ -18,8 +16,8 @@ This application is not endorsed by or affiliated with *Funimation*. This applic
 ### Paths Configuration
 
 By default this application uses the following paths to programs (main executables):
-* `./bin/mkvmerge`
-* `./bin/ffmpeg`
+* `./bin/ffmpeg.exe`
+* `./bin/mkvmerge.exe`
 
 To change these paths you need to edit `bin-path.yml` in `./config/` directory.
 
@@ -36,20 +34,27 @@ After installing NodeJS with NPM go to directory with `package.json` file and ty
 
 ### Get Show ID
 
-* `--search <s>` sets the show title for search
+* `-f`, `--search <s>` sets the show title for search
 
 ### Download Video
 
 * `-s <i> -e <s>` sets the show id and episode ids (comma-separated, hyphen-sequence)
 * `-q <i>` sets the video layer quality [1...10] (optional, 0 is max)
+* `--all` download all videos at once
 * `--alt` alternative episode listing (if available)
-* `--sub` switch from English dub to Japanese dub with subtitles
+* `--subLang` select one or more subtile language
+* `--allSubs` If set to true, all available subs will get downloaded
+* `--dub` select one or more dub languages
+* `--allDubs` If set to true, all available dubs will get downloaded
 * `--simul` force select simulcast version instead of uncut version
-* `-x` select server
-* `--novids` skip download videos  (for downloading subtitles only)
+* `-x`, `--server` select server
+* `--novids` skip download videos
 * `--nosubs` skip download subtitles for Dub (if available)
+* `--noaudio` skip downloading audio
 
 ### Proxy
+
+The proxy is currently unmainted. Use at your on risk.
 
 * `--proxy <s>` http(s)/socks proxy WHATWG url (ex. https://myproxyhost:1080)
 * `--proxy-auth <s>` Colon-separated username and password for proxy
@@ -63,22 +68,22 @@ After installing NodeJS with NPM go to directory with `package.json` file and ty
 
 ### Filenaming (optional)
 
-* `-a <s>` release group ("Funimation" by default)
-* `-t <s>` show title override
-* `--ep <s>` episode number override (ignored in batch mode)
-* `--suffix <s>` filename suffix override (first "SIZEp" will be replaced with actual video size, "SIZEp" by default)
+* `--fileName`  Set the filename template. Use ${variable_name} to insert variables.
+                You may use 'title', 'episode', 'showTitle', 'season', 'width', 'height' as variables.
 
 ### Utility
 
-* `--nocleanup` move unnecessary files to trash folder after completion instead of deleting
+* `--nocleanup` don't delete the input files after the muxing
 * `-h`, `--help` show all options
 
 ## Filename Template
 
-[`release group`] `title` - `episode` [`suffix`].`extension`
+[Funimation] ${showTitle} - ${episode} [${height}p]"]
 
 ## CLI Examples
 
 * `node funi --search "My Hero"` search "My Hero" in title
 * `node funi -s 124389 -e 1,2,3` download episodes 1-3 from show with id 124389
 * `node funi -s 124389 -e 1-3,2-7,s1-2` download episodes 1-7 and "S"-episodes 1-2 from show with id 124389
+* `node funi -s 19373 -e 28-47 -q 7 --allSubs --dub jaJP ptBR` download episodes 28 to 47 with Portuguese (Brazil) and Japanese audio in 720p(HD) resolution with all subtitles available
+* `node funi -s 19373 -e 15-30 -q 10 --subLang ptBR enUS --dub jaJP` download episodes 15 to 30 with Japanese audio in 1080p resolution (Full HD) with Portuguese (Brazil) and English subtitles
